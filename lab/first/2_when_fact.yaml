@@ -1,0 +1,17 @@
+---
+- name: Second network playbook with 'when' and 'facts'
+  connection: network_cli
+  gather_facts: true
+  hosts: Routers
+  tasks:
+#    - name: Gather IOS Facts...
+#      ios_facts:
+#      when: ansible_network_os == 'ios'
+
+    - name: Display facts
+      debug:
+        msg: " The hostname of the Router is {{ ansible_net_hostname }} which has an IP address {{ ansible_facts['net_interfaces']['GigabitEthernet0/0']['ipv4'][0]['address'] }}/{{ ansible_facts['net_interfaces']['GigabitEthernet0/0']['ipv4'][0]['subnet'] }} and the OS version is {{ ansible_net_version }}"
+
+...
+
+

@@ -1,0 +1,28 @@
+---
+- name: Create loopback 
+  gather_facts: false
+  connection: network_cli
+  hosts: all
+  tasks: 
+    - name: create loopback
+      ios_config: 
+        parents: interface loopback 2
+        lines: 
+          - ip address 2.2.2.2 255.255.255.0
+
+- name: Verification
+  gather_facts: false
+  connection: network_cli
+  hosts: all
+  tasks:
+    - name: show run interface loopback 2
+      ios_command: 
+        commands:
+          - show run interface loopback 2
+      register: output
+
+    - name: display output
+      debug:
+        var: output
+...
+

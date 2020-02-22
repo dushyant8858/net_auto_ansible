@@ -1,0 +1,27 @@
+---
+- name: Check interfaces
+  hosts: "Routers"
+  gather_facts: false
+  connection: local
+
+  vars: 
+    cli:
+      host: "{{ Host }}"
+      username: "{{ UserName }}"
+      password: "{{ Password }}"
+      
+  tasks:
+    - name: show ip interface brief
+      ios_command: 
+        commands: show ip interface brief
+        provider: "{{ cli }}"
+      
+      register: output
+
+    - name: show output
+      debug:
+        var: output.stdout
+   
+    - name: copy output to file
+      copy: content="{{ output }}" dest=./output/{{ inventory_hostname }}.txt
+...

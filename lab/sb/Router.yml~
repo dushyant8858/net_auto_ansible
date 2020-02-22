@@ -1,0 +1,43 @@
+---
+- name: Manage GNS3 devices
+  hosts: R1
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: smu
+      password: smu
+
+  tasks:
+#    - name: show version
+#      ios_command: 
+#        commands:  en
+#        commands:  smu
+
+#        authorize: yes
+#        commands:  show version
+#        provider: "{{ cli }}"
+      
+#      register: output
+
+#    - name: show output
+#      debug:
+#        var: output.stdout
+   
+
+
+
+
+
+    - name: enable ospf
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: router ospf 1
+        lines:
+          - network 0.0.0.0 255.255.255.255 area 0
+
+      register: print_output
+
+    -  debug: var=print_output
